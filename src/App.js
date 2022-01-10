@@ -1,23 +1,44 @@
-import logo from './logo.svg';
+import React, {useState, useEffect} from "react"; 
 import './App.css';
 
-function App() {
+import { Login } from "./component/login";
+import { FetchReq } from "./component/fetcher";
+
+const App = () => {
+  const [user, setUser] = useState();
+  const [username, setUsername] = useState();
+  const [arr, setArr] = useState([]);
+
+  useEffect(() => {
+    FetchReq();
+  }, []);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setUsername(user);
+  };
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{user}</h1>
+      {username ? <h1>Welcome {username}</h1> : <h1>Please log in</h1>}
+      {username && <h2>Success</h2>}
+      <Login setter={setUser} handler={submitHandler} />
+      <FetchReq setArray={setArr} />
+      {arr.map((item, index) => {
+        return (
+            <div>
+                <p key={index}>{item.author}</p>
+                <img
+                    className="imageFuntime"
+                    src={item.download_url}
+                    alt="random"
+                />
+            </div>
+        )})
+      }
     </div>
   );
 }
