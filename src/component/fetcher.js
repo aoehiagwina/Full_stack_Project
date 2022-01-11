@@ -1,7 +1,21 @@
+import './fetcher.css';
 
-export const FetchReq = async (setArray) => {
-    const response = await fetch("https://picsum.photos/v2/list");
-    const data = await response.json();
-    setArray(data);
+export const FetchReq = ({arr}) => {
 
-};
+return(
+    <div>
+        {arr.map((item, index) => {
+            return (
+                <div>
+                    <p key={index}>{item.author}</p>
+                    <img
+                        className="imageFunTime"
+                        src={item.download_url}
+                        alt="random"
+                    />
+                </div>
+            )})}
+    </div>
+    )
+
+} 

@@ -2,22 +2,29 @@ import React, {useState, useEffect} from "react";
 import './App.css';
 
 import { Login } from "./component/login";
-import { FetchReq } from "./component/fetcher";
+import {FetchReq} from "./component/fetcher"
 
 const App = () => {
   const [user, setUser] = useState();
   const [username, setUsername] = useState();
   const [arr, setArr] = useState([]);
 
+
   useEffect(() => {
-    FetchReq();
-  }, []);
+    fetching();
+    }, []);
+
 
   const submitHandler = (e) => {
     e.preventDefault();
     setUsername(user);
   };
 
+  const fetching = async () => {
+    const response = await fetch("https://picsum.photos/v2/list");
+    const data = await response.json();
+    setArr(data);
+  };
 
 
   return (
@@ -26,19 +33,19 @@ const App = () => {
       {username ? <h1>Welcome {username}</h1> : <h1>Please log in</h1>}
       {username && <h2>Success</h2>}
       <Login setter={setUser} handler={submitHandler} />
-      <FetchReq setArray={setArr} />
-      {arr.map((item, index) => {
+      <FetchReq arr={arr}/>
+      {/* {arr.map((item, i) => {
         return (
             <div>
-                <p key={index}>{item.author}</p>
+                <p key={i}>{item.author}</p>
                 <img
-                    className="imageFuntime"
+                    className="imageFunTime"
                     src={item.download_url}
                     alt="random"
                 />
             </div>
         )})
-      }
+      } */}
     </div>
   );
 }
