@@ -15,3 +15,20 @@ export const signUpFetch = async (username, email, password) => {
     console.console.log(error);
   }
 };
+
+
+export const readUserFetch = async (username) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_REST_API}user/${username}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      // body: JSON.stringify({
+      //   username: username,
+      // }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
