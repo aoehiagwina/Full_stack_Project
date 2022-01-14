@@ -32,3 +32,21 @@ export const readUserFetch = async (username) => {
     console.log(error);
   }
 };
+
+
+export const updateUserFetch = async (username, email) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_REST_API}user`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: username,
+        email: email,
+      }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};

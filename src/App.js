@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import './App.css';
 import {signUpFetch} from "./utils/index";
 import {readUserFetch} from "./utils/index";
+import {updateUserFetch} from "./utils/index";
+
 import { Creater } from "./component/creater";
 import { Reading } from "./component/reader";
 
@@ -11,6 +13,7 @@ const App = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [listUser, setListUser] = useState();
+  // let updating = false;
 
   const signUpHandler = async (e) => {
     e.preventDefault(); //stops the default reset rendering
@@ -29,6 +32,15 @@ const App = () => {
     setEmail(return_details.user.email);
   }
 
+  const updateHandler = async (e) => {
+    e.preventDefault();
+    // updating = true;
+    const update_details = await updateUserFetch(username, email);
+    setUsername(update_details.username);
+    setEmail(update_details.email);
+  }
+
+
   return (
     <div className="App">
       <Creater signingHandler={signUpHandler} 
@@ -39,6 +51,21 @@ const App = () => {
       user_email={email} 
       listing_Handler={listingHandler}
       set_Username={setUsername} />
+
+      <h1>{username}</h1>
+
+      <form onSubmit={updateHandler}>
+        <input
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Username"
+        />
+        <input
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+        <button type="submit">Submit</button>
+      </form>
+
     </div>
   );
 }
